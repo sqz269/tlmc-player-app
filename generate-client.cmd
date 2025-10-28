@@ -1,0 +1,1 @@
+openapi-generator-cli.cmd generate -i https://staging-api.marisad.me/swagger/v1/swagger.json -g dart -o backend_client_api --additional-properties=pubLibrary=Backend.ClientApi --additional-properties=pubName=backend_client_api

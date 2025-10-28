@@ -13,6 +13,8 @@ environment:
   flutter: ">=3.29.0"
 
 dependencies:
+  backend_client_api:
+    path: backend_client_api
   app_links: ^6.4.0
   args: ^2.5.0
   async: ^2.11.0
