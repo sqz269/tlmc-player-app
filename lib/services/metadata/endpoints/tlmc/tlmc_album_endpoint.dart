@@ -1,4 +1,6 @@
+import 'package:backend_client_api/api.dart';
 import 'package:spotube/models/metadata/metadata.dart';
+import 'package:spotube/services/metadata/endpoints/tlmc/mapping_utils.dart';
 import 'package:spotube/services/metadata/interfaces/album_endpoint.dart';
 
 /// Dart implementation of MetadataAlbumEndpointInterface
@@ -18,7 +20,30 @@ class TlmcAlbumEndpoint implements MetadataAlbumEndpointInterface {
     int? limit,
   }) async {
     // Implement Dart-specific track retrieval logic here
-    throw UnimplementedError('Dart album tracks endpoint not implemented yet');
+    var client = ApiClient(basePath: 'https://staging-api.marisad.me');
+    var albumApi = AlbumApi(client);
+    var response = await albumApi.getAlbum(id);
+
+    if (response == null) {
+      return SpotubePaginationResponseObject<SpotubeFullTrackObject>(
+        limit: 0,
+        nextOffset: 0,
+        total: 0,
+        hasMore: false,
+        items: [],
+      );
+    }
+
+    return SpotubePaginationResponseObject<SpotubeFullTrackObject>(
+      limit: response.tracks!.length,
+      nextOffset: null,
+      total: response.tracks!.length,
+      hasMore: false,
+      items: response.tracks!
+          .map((track) => TlmcToSpotubeMappingUtils.toSpotubeFullTrackObject(
+              track, response))
+          .toList(),
+    );
   }
 
   @override
