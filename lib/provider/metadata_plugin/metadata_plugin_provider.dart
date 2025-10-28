@@ -12,6 +12,7 @@ import 'package:spotube/models/metadata/metadata.dart';
 import 'package:spotube/provider/database/database.dart';
 import 'package:spotube/services/dio/dio.dart';
 import 'package:spotube/services/logger/logger.dart';
+import 'package:spotube/services/metadata/dart_metadata_plugin.dart';
 import 'package:spotube/services/metadata/errors/exceptions.dart';
 import 'package:spotube/services/metadata/metadata.dart';
 import 'package:spotube/utils/service_utils.dart';
@@ -436,13 +437,19 @@ final metadataPluginProvider = FutureProvider<MetadataPlugin?>(
     );
 
     if (defaultPlugin == null) {
+      return DartTlmcDefaultMetadataPlugin.create();
       return null;
     }
 
     final pluginsNotifier = ref.read(metadataPluginsProvider.notifier);
-    final pluginByteCode =
-        await pluginsNotifier.getPluginByteCode(defaultPlugin);
 
-    return await MetadataPlugin.create(defaultPlugin, pluginByteCode);
+    if (defaultPlugin.entryPoint == "::dart::") {
+      return DartTlmcDefaultMetadataPlugin.create();
+    } else {
+      final pluginByteCode =
+          await pluginsNotifier.getPluginByteCode(defaultPlugin);
+
+      return await MetadataPlugin.create(defaultPlugin, pluginByteCode);
+    }
   },
 );

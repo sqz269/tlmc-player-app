@@ -1,17 +1,21 @@
 import 'package:hetu_script/hetu_script.dart';
 import 'package:hetu_script/values.dart';
 import 'package:spotube/models/metadata/metadata.dart';
+import 'package:spotube/services/metadata/interfaces/playlist_endpoint.dart';
 
-class MetadataPluginPlaylistEndpoint {
-  final Hetu hetu;
-  MetadataPluginPlaylistEndpoint(this.hetu);
+/// Hetu implementation of MetadataPlaylistEndpointInterface
+class HetuPlaylistEndpoint implements MetadataPlaylistEndpointInterface {
+  final Hetu _hetu;
 
-  HTInstance get hetuMetadataPlaylist =>
-      (hetu.fetch("metadataPlugin") as HTInstance).memberGet("playlist")
+  HetuPlaylistEndpoint(this._hetu);
+
+  HTInstance get _hetuMetadataPlaylist =>
+      (_hetu.fetch("metadataPlugin") as HTInstance).memberGet("playlist")
           as HTInstance;
 
+  @override
   Future<SpotubeFullPlaylistObject> getPlaylist(String id) async {
-    final raw = await hetuMetadataPlaylist
+    final raw = await _hetuMetadataPlaylist
         .invoke("getPlaylist", positionalArgs: [id]) as Map;
 
     return SpotubeFullPlaylistObject.fromJson(
@@ -19,12 +23,13 @@ class MetadataPluginPlaylistEndpoint {
     );
   }
 
+  @override
   Future<SpotubePaginationResponseObject<SpotubeFullTrackObject>> tracks(
     String id, {
     int? offset,
     int? limit,
   }) async {
-    final raw = await hetuMetadataPlaylist.invoke(
+    final raw = await _hetuMetadataPlaylist.invoke(
       "tracks",
       positionalArgs: [id],
       namedArgs: {
@@ -40,6 +45,7 @@ class MetadataPluginPlaylistEndpoint {
     );
   }
 
+  @override
   Future<SpotubeFullPlaylistObject?> create(
     String userId, {
     required String name,
@@ -47,7 +53,7 @@ class MetadataPluginPlaylistEndpoint {
     bool? public,
     bool? collaborative,
   }) async {
-    final raw = await hetuMetadataPlaylist.invoke(
+    final raw = await _hetuMetadataPlaylist.invoke(
       "create",
       positionalArgs: [userId],
       namedArgs: {
@@ -65,6 +71,7 @@ class MetadataPluginPlaylistEndpoint {
     );
   }
 
+  @override
   Future<void> update(
     String playlistId, {
     String? name,
@@ -72,7 +79,7 @@ class MetadataPluginPlaylistEndpoint {
     bool? public,
     bool? collaborative,
   }) async {
-    await hetuMetadataPlaylist.invoke(
+    await _hetuMetadataPlaylist.invoke(
       "update",
       positionalArgs: [playlistId],
       namedArgs: {
@@ -84,12 +91,13 @@ class MetadataPluginPlaylistEndpoint {
     );
   }
 
+  @override
   Future<void> addTracks(
     String playlistId, {
     required List<String> trackIds,
     int? position,
   }) async {
-    await hetuMetadataPlaylist.invoke(
+    await _hetuMetadataPlaylist.invoke(
       "addTracks",
       positionalArgs: [playlistId],
       namedArgs: {
@@ -99,11 +107,12 @@ class MetadataPluginPlaylistEndpoint {
     );
   }
 
+  @override
   Future<void> removeTracks(
     String playlistId, {
     required List<String> trackIds,
   }) async {
-    await hetuMetadataPlaylist.invoke(
+    await _hetuMetadataPlaylist.invoke(
       "removeTracks",
       positionalArgs: [playlistId],
       namedArgs: {
@@ -112,22 +121,25 @@ class MetadataPluginPlaylistEndpoint {
     );
   }
 
+  @override
   Future<void> save(String playlistId) async {
-    await hetuMetadataPlaylist.invoke(
+    await _hetuMetadataPlaylist.invoke(
       "save",
       positionalArgs: [playlistId],
     );
   }
 
+  @override
   Future<void> unsave(String playlistId) async {
-    await hetuMetadataPlaylist.invoke(
+    await _hetuMetadataPlaylist.invoke(
       "unsave",
       positionalArgs: [playlistId],
     );
   }
 
+  @override
   Future<void> deletePlaylist(String playlistId) async {
-    return await hetuMetadataPlaylist.invoke(
+    return await _hetuMetadataPlaylist.invoke(
       "deletePlaylist",
       positionalArgs: [playlistId],
     );

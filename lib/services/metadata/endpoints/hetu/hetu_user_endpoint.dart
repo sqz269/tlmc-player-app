@@ -1,28 +1,33 @@
 import 'package:hetu_script/hetu_script.dart';
 import 'package:hetu_script/values.dart';
 import 'package:spotube/models/metadata/metadata.dart';
+import 'package:spotube/services/metadata/interfaces/user_endpoint.dart';
 
-class MetadataPluginUserEndpoint {
-  final Hetu hetu;
-  MetadataPluginUserEndpoint(this.hetu);
+/// Hetu implementation of MetadataUserEndpointInterface
+class HetuUserEndpoint implements MetadataUserEndpointInterface {
+  final Hetu _hetu;
 
-  HTInstance get hetuMetadataUser =>
-      (hetu.fetch("metadataPlugin") as HTInstance).memberGet("user")
+  HetuUserEndpoint(this._hetu);
+
+  HTInstance get _hetuMetadataUser =>
+      (_hetu.fetch("metadataPlugin") as HTInstance).memberGet("user")
           as HTInstance;
 
+  @override
   Future<SpotubeUserObject> me() async {
-    final raw = await hetuMetadataUser.invoke("me") as Map;
+    final raw = await _hetuMetadataUser.invoke("me") as Map;
 
     return SpotubeUserObject.fromJson(
       raw.cast<String, dynamic>(),
     );
   }
 
+  @override
   Future<SpotubePaginationResponseObject<SpotubeFullTrackObject>> savedTracks({
     int? offset,
     int? limit,
   }) async {
-    final raw = await hetuMetadataUser.invoke(
+    final raw = await _hetuMetadataUser.invoke(
       "savedTracks",
       namedArgs: {
         "offset": offset,
@@ -37,12 +42,13 @@ class MetadataPluginUserEndpoint {
     );
   }
 
+  @override
   Future<SpotubePaginationResponseObject<SpotubeSimplePlaylistObject>>
       savedPlaylists({
     int? offset,
     int? limit,
   }) async {
-    final raw = await hetuMetadataUser.invoke(
+    final raw = await _hetuMetadataUser.invoke(
       "savedPlaylists",
       namedArgs: {
         "offset": offset,
@@ -58,12 +64,13 @@ class MetadataPluginUserEndpoint {
     );
   }
 
+  @override
   Future<SpotubePaginationResponseObject<SpotubeSimpleAlbumObject>>
       savedAlbums({
     int? offset,
     int? limit,
   }) async {
-    final raw = await hetuMetadataUser.invoke(
+    final raw = await _hetuMetadataUser.invoke(
       "savedAlbums",
       namedArgs: {
         "offset": offset,
@@ -78,12 +85,13 @@ class MetadataPluginUserEndpoint {
     );
   }
 
+  @override
   Future<SpotubePaginationResponseObject<SpotubeFullArtistObject>>
       savedArtists({
     int? offset,
     int? limit,
   }) async {
-    final raw = await hetuMetadataUser.invoke(
+    final raw = await _hetuMetadataUser.invoke(
       "savedArtists",
       namedArgs: {
         "offset": offset,
@@ -98,31 +106,35 @@ class MetadataPluginUserEndpoint {
     );
   }
 
+  @override
   Future<bool> isSavedPlaylist(String playlistId) async {
-    return await hetuMetadataUser.invoke(
+    return await _hetuMetadataUser.invoke(
       "isSavedPlaylist",
       positionalArgs: [playlistId],
     ) as bool;
   }
 
+  @override
   Future<List<bool>> isSavedTracks(List<String> ids) async {
-    final values = await hetuMetadataUser.invoke(
+    final values = await _hetuMetadataUser.invoke(
       "isSavedTracks",
       positionalArgs: [ids],
     );
     return (values as List).cast<bool>();
   }
 
+  @override
   Future<List<bool>> isSavedAlbums(List<String> ids) async {
-    final values = await hetuMetadataUser.invoke(
+    final values = await _hetuMetadataUser.invoke(
       "isSavedAlbums",
       positionalArgs: [ids],
     ) as List;
     return values.cast<bool>();
   }
 
+  @override
   Future<List<bool>> isSavedArtists(List<String> ids) async {
-    final values = await hetuMetadataUser.invoke(
+    final values = await _hetuMetadataUser.invoke(
       "isSavedArtists",
       positionalArgs: [ids],
     ) as List;

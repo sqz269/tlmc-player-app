@@ -1,19 +1,24 @@
 import 'package:hetu_script/hetu_script.dart';
 import 'package:hetu_script/values.dart';
 import 'package:spotube/models/metadata/metadata.dart';
+import 'package:spotube/services/metadata/interfaces/search_endpoint.dart';
 
-class MetadataPluginSearchEndpoint {
-  final Hetu hetu;
-  MetadataPluginSearchEndpoint(this.hetu);
+/// Hetu implementation of MetadataSearchEndpointInterface
+class HetuSearchEndpoint implements MetadataSearchEndpointInterface {
+  final Hetu _hetu;
 
-  HTInstance get hetuMetadataSearch =>
-      (hetu.fetch("metadataPlugin") as HTInstance).memberGet("search")
+  HetuSearchEndpoint(this._hetu);
+
+  HTInstance get _hetuMetadataSearch =>
+      (_hetu.fetch("metadataPlugin") as HTInstance).memberGet("search")
           as HTInstance;
 
+  @override
   List<String> get chips {
-    return (hetuMetadataSearch.memberGet("chips") as List).cast<String>();
+    return (_hetuMetadataSearch.memberGet("chips") as List).cast<String>();
   }
 
+  @override
   Future<SpotubeSearchResponseObject> all(String query) async {
     if (query.isEmpty) {
       return SpotubeSearchResponseObject(
@@ -24,7 +29,7 @@ class MetadataPluginSearchEndpoint {
       );
     }
 
-    final raw = await hetuMetadataSearch.invoke(
+    final raw = await _hetuMetadataSearch.invoke(
       "all",
       positionalArgs: [query],
     ) as Map;
@@ -32,6 +37,7 @@ class MetadataPluginSearchEndpoint {
     return SpotubeSearchResponseObject.fromJson(raw.cast<String, dynamic>());
   }
 
+  @override
   Future<SpotubePaginationResponseObject<SpotubeSimpleAlbumObject>> albums(
     String query, {
     int? limit,
@@ -47,7 +53,7 @@ class MetadataPluginSearchEndpoint {
       );
     }
 
-    final raw = await hetuMetadataSearch.invoke(
+    final raw = await _hetuMetadataSearch.invoke(
       "albums",
       positionalArgs: [query],
       namedArgs: {
@@ -62,6 +68,7 @@ class MetadataPluginSearchEndpoint {
     );
   }
 
+  @override
   Future<SpotubePaginationResponseObject<SpotubeFullArtistObject>> artists(
     String query, {
     int? limit,
@@ -77,7 +84,7 @@ class MetadataPluginSearchEndpoint {
       );
     }
 
-    final raw = await hetuMetadataSearch.invoke(
+    final raw = await _hetuMetadataSearch.invoke(
       "artists",
       positionalArgs: [query],
       namedArgs: {
@@ -94,6 +101,7 @@ class MetadataPluginSearchEndpoint {
     );
   }
 
+  @override
   Future<SpotubePaginationResponseObject<SpotubeSimplePlaylistObject>>
       playlists(
     String query, {
@@ -110,7 +118,7 @@ class MetadataPluginSearchEndpoint {
       );
     }
 
-    final raw = await hetuMetadataSearch.invoke(
+    final raw = await _hetuMetadataSearch.invoke(
       "playlists",
       positionalArgs: [query],
       namedArgs: {
@@ -128,6 +136,7 @@ class MetadataPluginSearchEndpoint {
     );
   }
 
+  @override
   Future<SpotubePaginationResponseObject<SpotubeFullTrackObject>> tracks(
     String query, {
     int? limit,
@@ -143,7 +152,7 @@ class MetadataPluginSearchEndpoint {
       );
     }
 
-    final raw = await hetuMetadataSearch.invoke(
+    final raw = await _hetuMetadataSearch.invoke(
       "tracks",
       positionalArgs: [query],
       namedArgs: {

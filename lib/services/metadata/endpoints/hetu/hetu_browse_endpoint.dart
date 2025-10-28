@@ -1,21 +1,25 @@
 import 'package:hetu_script/hetu_script.dart';
 import 'package:hetu_script/values.dart';
 import 'package:spotube/models/metadata/metadata.dart';
+import 'package:spotube/services/metadata/interfaces/browse_endpoint.dart';
 
-class MetadataPluginBrowseEndpoint {
-  final Hetu hetu;
-  MetadataPluginBrowseEndpoint(this.hetu);
+/// Hetu implementation of MetadataBrowseEndpointInterface
+class HetuBrowseEndpoint implements MetadataBrowseEndpointInterface {
+  final Hetu _hetu;
 
-  HTInstance get hetuMetadataBrowse =>
-      (hetu.fetch("metadataPlugin") as HTInstance).memberGet("browse")
+  HetuBrowseEndpoint(this._hetu);
+
+  HTInstance get _hetuMetadataBrowse =>
+      (_hetu.fetch("metadataPlugin") as HTInstance).memberGet("browse")
           as HTInstance;
 
+  @override
   Future<SpotubePaginationResponseObject<SpotubeBrowseSectionObject<Object>>>
       sections({
     int? offset,
     int? limit,
   }) async {
-    final raw = await hetuMetadataBrowse.invoke(
+    final raw = await _hetuMetadataBrowse.invoke(
       "sections",
       namedArgs: {
         "offset": offset,
@@ -49,12 +53,13 @@ class MetadataPluginBrowseEndpoint {
     );
   }
 
+  @override
   Future<SpotubePaginationResponseObject<Object>> sectionItems(
     String id, {
     int? offset,
     int? limit,
   }) async {
-    final raw = await hetuMetadataBrowse.invoke(
+    final raw = await _hetuMetadataBrowse.invoke(
       "sectionItems",
       positionalArgs: [id],
       namedArgs: {
