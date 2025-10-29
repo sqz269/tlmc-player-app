@@ -1,6 +1,5 @@
 import 'package:backend_client_api/api.dart';
 import 'package:spotube/models/metadata/metadata.dart';
-import 'package:spotube/services/metadata/interfaces/browse_endpoint.dart';
 
 class TlmcToSpotubeMappingUtils {
   static SpotubeSimpleArtistObject toSpotubeSimpleArtistObject(
@@ -31,10 +30,11 @@ class TlmcToSpotubeMappingUtils {
       return [];
     }
     var imagesList = <SpotubeImageObject?>[];
+    // imagesList.add(toSpotubeImageObjectFromAsset(thumbnail., 1000, 1000));
     imagesList.add(toSpotubeImageObjectFromAsset(thumbnail.large, 500, 500));
-    imagesList.add(toSpotubeImageObjectFromAsset(thumbnail.medium, 300, 300));
-    imagesList.add(toSpotubeImageObjectFromAsset(thumbnail.small, 100, 100));
-    imagesList.add(toSpotubeImageObjectFromAsset(thumbnail.tiny, 50, 50));
+    // imagesList.add(toSpotubeImageObjectFromAsset(thumbnail.medium, 300, 300));
+    // imagesList.add(toSpotubeImageObjectFromAsset(thumbnail.small, 100, 100));
+    // imagesList.add(toSpotubeImageObjectFromAsset(thumbnail.tiny, 50, 50));
 
     return imagesList
         .where((image) => image != null)

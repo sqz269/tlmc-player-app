@@ -42,6 +42,7 @@ class GettingStartedPagePlaybackSection extends HookConsumerWidget {
 
     final audioSourceToDescription = useMemoized(
         () => {
+              AudioSource.tlmc: "TLMC source description",
               AudioSource.youtube: "${context.l10n.youtube_source_description}\n"
                   "${context.l10n.highest_quality("148kbps mp4, 128kbps opus")}",
               AudioSource.piped: context.l10n.piped_source_description,

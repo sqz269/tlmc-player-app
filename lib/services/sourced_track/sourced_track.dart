@@ -8,6 +8,7 @@ import 'package:spotube/services/sourced_track/enums.dart';
 import 'package:spotube/services/sourced_track/sources/invidious.dart';
 import 'package:spotube/services/sourced_track/sources/jiosaavn.dart';
 import 'package:spotube/services/sourced_track/sources/piped.dart';
+import 'package:spotube/services/sourced_track/sources/tlmc.dart';
 import 'package:spotube/services/sourced_track/sources/youtube.dart';
 import 'package:spotube/utils/service_utils.dart';
 
@@ -42,6 +43,14 @@ abstract class SourcedTrack extends BasicSourcedTrack {
         (json["sources"] as List).map((s) => TrackSource.fromJson(s)).toList();
 
     return switch (preferences.audioSource) {
+      AudioSource.tlmc => TlmcSourcedTrack(
+          ref: ref,
+          source: source,
+          siblings: siblings,
+          info: info,
+          query: query,
+          sources: sources,
+        ),
       AudioSource.youtube => YoutubeSourcedTrack(
           ref: ref,
           source: source,
@@ -96,6 +105,8 @@ abstract class SourcedTrack extends BasicSourcedTrack {
     final preferences = ref.read(userPreferencesProvider);
     try {
       return switch (preferences.audioSource) {
+        AudioSource.tlmc =>
+          await TlmcSourcedTrack.fetchFromTrack(query: query, ref: ref),
         AudioSource.youtube =>
           await YoutubeSourcedTrack.fetchFromTrack(query: query, ref: ref),
         AudioSource.piped =>
@@ -121,6 +132,8 @@ abstract class SourcedTrack extends BasicSourcedTrack {
     final preferences = ref.read(userPreferencesProvider);
 
     return switch (preferences.audioSource) {
+      AudioSource.tlmc =>
+        TlmcSourcedTrack.fetchSiblings(query: query, ref: ref),
       AudioSource.piped =>
         PipedSourcedTrack.fetchSiblings(query: query, ref: ref),
       AudioSource.youtube =>
