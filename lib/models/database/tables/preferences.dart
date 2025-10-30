@@ -103,7 +103,7 @@ class PreferencesTable extends Table {
   TextColumn get themeMode =>
       textEnum<ThemeMode>().withDefault(Constant(ThemeMode.system.name))();
   TextColumn get audioSource =>
-      textEnum<AudioSource>().withDefault(Constant(AudioSource.youtube.name))();
+      textEnum<AudioSource>().withDefault(Constant(AudioSource.tlmc.name))();
   TextColumn get youtubeClientEngine => textEnum<YoutubeClientEngine>()
       .withDefault(Constant(YoutubeClientEngine.youtubeExplode.name))();
   TextColumn get streamMusicCodec =>
@@ -142,7 +142,7 @@ class PreferencesTable extends Table {
       pipedInstance: "https://pipedapi.kavin.rocks",
       invidiousInstance: "https://inv.nadeko.net",
       themeMode: ThemeMode.system,
-      audioSource: AudioSource.youtube,
+      audioSource: AudioSource.tlmc,
       youtubeClientEngine: YoutubeClientEngine.youtubeExplode,
       streamMusicCodec: SourceCodecs.m4a,
       downloadMusicCodec: SourceCodecs.m4a,
