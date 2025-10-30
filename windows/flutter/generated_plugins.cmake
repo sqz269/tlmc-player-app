@@ -14,6 +14,8 @@ list(APPEND FLUTTER_PLUGIN_LIST
   irondash_engine_context
   local_notifier
   media_kit_libs_windows_audio
+  media_kit_libs_windows_video
+  media_kit_video
   permission_handler_windows
   screen_retriever_windows
   sqlite3_flutter_libs
@@ -21,6 +23,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   system_theme
   tray_manager
   url_launcher_windows
+  volume_controller
   window_manager
 )
 
