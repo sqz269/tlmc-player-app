@@ -195,6 +195,10 @@ class UserPreferencesNotifier extends Notifier<PreferencesTableData> {
     setData(PreferencesTableCompanion(invidiousInstance: Value(instance)));
   }
 
+  void setTlmcInstance(String instance) {
+    setData(PreferencesTableCompanion(tlmcInstance: Value(instance)));
+  }
+
   void setSearchMode(SearchMode mode) {
     setData(PreferencesTableCompanion(searchMode: Value(mode)));
   }

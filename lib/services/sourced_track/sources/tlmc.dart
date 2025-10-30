@@ -2,11 +2,21 @@ import 'package:backend_client_api/api.dart';
 import 'package:spotube/models/database/database.dart';
 import 'package:spotube/models/playback/track_sources.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:spotube/provider/user_preferences/user_preferences_provider.dart';
 import 'package:spotube/services/logger/logger.dart';
 import 'package:spotube/services/metadata/endpoints/tlmc/mapping_utils.dart';
 import 'package:spotube/services/sourced_track/enums.dart';
 import 'package:spotube/services/sourced_track/exceptions.dart';
 import 'package:spotube/services/sourced_track/sourced_track.dart';
+
+final tlmcClientProvider = Provider<ApiClient>(
+  (ref) {
+    final tlmcInstance = ref.watch(
+      userPreferencesProvider.select((s) => s.tlmcInstance),
+    );
+    return ApiClient(basePath: tlmcInstance);
+  },
+);
 
 class TlmcSourcedTrack extends SourcedTrack {
   TlmcSourcedTrack({
@@ -22,7 +32,9 @@ class TlmcSourcedTrack extends SourcedTrack {
     required TrackSourceQuery query,
     required Ref ref,
   }) async {
-    var client = ApiClient(basePath: 'https://staging-api.marisad.me');
+    final client = ref.read(tlmcClientProvider);
+    final tlmcInstance = ref.read(userPreferencesProvider).tlmcInstance;
+
     var tracksApi = TrackApi(client);
     var response = await tracksApi.getTrack(query.id);
 
@@ -34,10 +46,9 @@ class TlmcSourcedTrack extends SourcedTrack {
     AppLogger.log.i("Title: ${response.name!.default_}");
 
     // Adaptive streaming URLs - supports both HLS and DASH formats
-    final hlsUrl =
-        "https://staging-api.marisad.me/api/asset/track/${response.id}/hls";
+    final hlsUrl = "$tlmcInstance/api/asset/track/${response.id}/hls";
     final dashUrl =
-        "https://staging-api.marisad.me/api/asset/track/${response.id}/dash/manifest.mpd";
+        "$tlmcInstance/api/asset/track/${response.id}/dash/manifest.mpd";
 
     AppLogger.log.i("HLS URL (master): $hlsUrl");
     AppLogger.log.i("DASH URL (manifest): $dashUrl");

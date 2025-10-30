@@ -36,6 +36,7 @@ const _$AudioSourceEnumMap = {
   AudioSource.piped: 'piped',
   AudioSource.jiosaavn: 'jiosaavn',
   AudioSource.invidious: 'invidious',
+  AudioSource.tlmc: 'tlmc',
 };
 
 _$TrackSourceQueryImpl _$$TrackSourceQueryImplFromJson(Map json) =>

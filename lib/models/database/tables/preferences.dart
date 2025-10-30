@@ -100,6 +100,8 @@ class PreferencesTable extends Table {
       text().withDefault(const Constant("https://pipedapi.kavin.rocks"))();
   TextColumn get invidiousInstance =>
       text().withDefault(const Constant("https://inv.nadeko.net"))();
+  TextColumn get tlmcInstance =>
+      text().withDefault(const Constant("https://staging-api.marisad.me"))();
   TextColumn get themeMode =>
       textEnum<ThemeMode>().withDefault(Constant(ThemeMode.system.name))();
   TextColumn get audioSource =>
@@ -141,6 +143,7 @@ class PreferencesTable extends Table {
       localLibraryLocation: [],
       pipedInstance: "https://pipedapi.kavin.rocks",
       invidiousInstance: "https://inv.nadeko.net",
+      tlmcInstance: "https://staging-api.marisad.me",
       themeMode: ThemeMode.system,
       audioSource: AudioSource.tlmc,
       youtubeClientEngine: YoutubeClientEngine.youtubeExplode,

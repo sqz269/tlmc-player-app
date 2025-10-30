@@ -1,11 +1,22 @@
+import 'package:backend_client_api/api.dart';
 import 'package:spotube/models/metadata/metadata.dart';
+import 'package:spotube/services/metadata/endpoints/tlmc/mapping_utils.dart';
 import 'package:spotube/services/metadata/interfaces/track_endpoint.dart';
 
 /// TLMC implementation of MetadataTrackEndpointInterface
 class TlmcTrackEndpoint implements MetadataTrackEndpointInterface {
   @override
   Future<SpotubeFullTrackObject> getTrack(String id) async {
-    throw UnimplementedError('TLMC track endpoint not implemented yet');
+    var client = ApiClient(basePath: 'https://staging-api.marisad.me');
+    var trackApi = TrackApi(client);
+    var response = await trackApi.getTrack(id);
+
+    if (response == null) {
+      throw Exception('Track not found');
+    }
+
+    return TlmcToSpotubeMappingUtils.toSpotubeFullTrackObject(
+        response, response.album!);
   }
 
   @override

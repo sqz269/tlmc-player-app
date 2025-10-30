@@ -18,15 +18,12 @@ class $AuthenticationTableTable extends AuthenticationTable
       requiredDuringInsert: false,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const VerificationMeta _cookieMeta = const VerificationMeta('cookie');
   @override
   late final GeneratedColumnWithTypeConverter<DecryptedText, String> cookie =
       GeneratedColumn<String>('cookie', aliasedName, false,
               type: DriftSqlType.string, requiredDuringInsert: true)
           .withConverter<DecryptedText>(
               $AuthenticationTableTable.$convertercookie);
-  static const VerificationMeta _accessTokenMeta =
-      const VerificationMeta('accessToken');
   @override
   late final GeneratedColumnWithTypeConverter<DecryptedText, String>
       accessToken = GeneratedColumn<String>('access_token', aliasedName, false,
@@ -55,8 +52,6 @@ class $AuthenticationTableTable extends AuthenticationTable
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    context.handle(_cookieMeta, const VerificationResult.success());
-    context.handle(_accessTokenMeta, const VerificationResult.success());
     if (data.containsKey('expiration')) {
       context.handle(
           _expirationMeta,
@@ -301,8 +296,6 @@ class $BlacklistTableTable extends BlacklistTable
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
       'name', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _elementTypeMeta =
-      const VerificationMeta('elementType');
   @override
   late final GeneratedColumnWithTypeConverter<BlacklistedType, String>
       elementType = GeneratedColumn<String>('element_type', aliasedName, false,
@@ -336,7 +329,6 @@ class $BlacklistTableTable extends BlacklistTable
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
-    context.handle(_elementTypeMeta, const VerificationResult.success());
     if (data.containsKey('element_id')) {
       context.handle(_elementIdMeta,
           elementId.isAcceptableOrUnknown(data['element_id']!, _elementIdMeta));
@@ -566,8 +558,6 @@ class $PreferencesTableTable extends PreferencesTable
       requiredDuringInsert: false,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const VerificationMeta _audioQualityMeta =
-      const VerificationMeta('audioQuality');
   @override
   late final GeneratedColumnWithTypeConverter<SourceQualities, String>
       audioQuality = GeneratedColumn<String>(
@@ -647,8 +637,6 @@ class $PreferencesTableTable extends PreferencesTable
       defaultConstraints: GeneratedColumn.constraintIsAlways(
           'CHECK ("skip_non_music" IN (0, 1))'),
       defaultValue: const Constant(false));
-  static const VerificationMeta _closeBehaviorMeta =
-      const VerificationMeta('closeBehavior');
   @override
   late final GeneratedColumnWithTypeConverter<CloseBehavior, String>
       closeBehavior = GeneratedColumn<String>(
@@ -658,8 +646,6 @@ class $PreferencesTableTable extends PreferencesTable
               defaultValue: Constant(CloseBehavior.close.name))
           .withConverter<CloseBehavior>(
               $PreferencesTableTable.$convertercloseBehavior);
-  static const VerificationMeta _accentColorSchemeMeta =
-      const VerificationMeta('accentColorScheme');
   @override
   late final GeneratedColumnWithTypeConverter<SpotubeColor, String>
       accentColorScheme = GeneratedColumn<String>(
@@ -669,8 +655,6 @@ class $PreferencesTableTable extends PreferencesTable
               defaultValue: const Constant("Slate:0xff64748b"))
           .withConverter<SpotubeColor>(
               $PreferencesTableTable.$converteraccentColorScheme);
-  static const VerificationMeta _layoutModeMeta =
-      const VerificationMeta('layoutMode');
   @override
   late final GeneratedColumnWithTypeConverter<LayoutMode, String> layoutMode =
       GeneratedColumn<String>('layout_mode', aliasedName, false,
@@ -679,7 +663,6 @@ class $PreferencesTableTable extends PreferencesTable
               defaultValue: Constant(LayoutMode.adaptive.name))
           .withConverter<LayoutMode>(
               $PreferencesTableTable.$converterlayoutMode);
-  static const VerificationMeta _localeMeta = const VerificationMeta('locale');
   @override
   late final GeneratedColumnWithTypeConverter<Locale, String> locale =
       GeneratedColumn<String>('locale', aliasedName, false,
@@ -688,7 +671,6 @@ class $PreferencesTableTable extends PreferencesTable
               defaultValue: const Constant(
                   '{"languageCode":"system","countryCode":"system"}'))
           .withConverter<Locale>($PreferencesTableTable.$converterlocale);
-  static const VerificationMeta _marketMeta = const VerificationMeta('market');
   @override
   late final GeneratedColumnWithTypeConverter<Market, String> market =
       GeneratedColumn<String>('market', aliasedName, false,
@@ -696,8 +678,6 @@ class $PreferencesTableTable extends PreferencesTable
               requiredDuringInsert: false,
               defaultValue: Constant(Market.US.name))
           .withConverter<Market>($PreferencesTableTable.$convertermarket);
-  static const VerificationMeta _searchModeMeta =
-      const VerificationMeta('searchMode');
   @override
   late final GeneratedColumnWithTypeConverter<SearchMode, String> searchMode =
       GeneratedColumn<String>('search_mode', aliasedName, false,
@@ -714,8 +694,6 @@ class $PreferencesTableTable extends PreferencesTable
       type: DriftSqlType.string,
       requiredDuringInsert: false,
       defaultValue: const Constant(""));
-  static const VerificationMeta _localLibraryLocationMeta =
-      const VerificationMeta('localLibraryLocation');
   @override
   late final GeneratedColumnWithTypeConverter<List<String>, String>
       localLibraryLocation = GeneratedColumn<String>(
@@ -741,8 +719,14 @@ class $PreferencesTableTable extends PreferencesTable
           type: DriftSqlType.string,
           requiredDuringInsert: false,
           defaultValue: const Constant("https://inv.nadeko.net"));
-  static const VerificationMeta _themeModeMeta =
-      const VerificationMeta('themeMode');
+  static const VerificationMeta _tlmcInstanceMeta =
+      const VerificationMeta('tlmcInstance');
+  @override
+  late final GeneratedColumn<String> tlmcInstance = GeneratedColumn<String>(
+      'tlmc_instance', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant("https://staging-api.marisad.me"));
   @override
   late final GeneratedColumnWithTypeConverter<ThemeMode, String> themeMode =
       GeneratedColumn<String>('theme_mode', aliasedName, false,
@@ -750,18 +734,14 @@ class $PreferencesTableTable extends PreferencesTable
               requiredDuringInsert: false,
               defaultValue: Constant(ThemeMode.system.name))
           .withConverter<ThemeMode>($PreferencesTableTable.$converterthemeMode);
-  static const VerificationMeta _audioSourceMeta =
-      const VerificationMeta('audioSource');
   @override
   late final GeneratedColumnWithTypeConverter<AudioSource, String> audioSource =
       GeneratedColumn<String>('audio_source', aliasedName, false,
               type: DriftSqlType.string,
               requiredDuringInsert: false,
-              defaultValue: Constant(AudioSource.youtube.name))
+              defaultValue: Constant(AudioSource.tlmc.name))
           .withConverter<AudioSource>(
               $PreferencesTableTable.$converteraudioSource);
-  static const VerificationMeta _youtubeClientEngineMeta =
-      const VerificationMeta('youtubeClientEngine');
   @override
   late final GeneratedColumnWithTypeConverter<YoutubeClientEngine, String>
       youtubeClientEngine = GeneratedColumn<String>(
@@ -771,8 +751,6 @@ class $PreferencesTableTable extends PreferencesTable
               defaultValue: Constant(YoutubeClientEngine.youtubeExplode.name))
           .withConverter<YoutubeClientEngine>(
               $PreferencesTableTable.$converteryoutubeClientEngine);
-  static const VerificationMeta _streamMusicCodecMeta =
-      const VerificationMeta('streamMusicCodec');
   @override
   late final GeneratedColumnWithTypeConverter<SourceCodecs, String>
       streamMusicCodec = GeneratedColumn<String>(
@@ -782,8 +760,6 @@ class $PreferencesTableTable extends PreferencesTable
               defaultValue: Constant(SourceCodecs.weba.name))
           .withConverter<SourceCodecs>(
               $PreferencesTableTable.$converterstreamMusicCodec);
-  static const VerificationMeta _downloadMusicCodecMeta =
-      const VerificationMeta('downloadMusicCodec');
   @override
   late final GeneratedColumnWithTypeConverter<SourceCodecs, String>
       downloadMusicCodec = GeneratedColumn<String>(
@@ -862,6 +838,7 @@ class $PreferencesTableTable extends PreferencesTable
         localLibraryLocation,
         pipedInstance,
         invidiousInstance,
+        tlmcInstance,
         themeMode,
         audioSource,
         youtubeClientEngine,
@@ -887,7 +864,6 @@ class $PreferencesTableTable extends PreferencesTable
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    context.handle(_audioQualityMeta, const VerificationResult.success());
     if (data.containsKey('album_color_sync')) {
       context.handle(
           _albumColorSyncMeta,
@@ -930,20 +906,12 @@ class $PreferencesTableTable extends PreferencesTable
           skipNonMusic.isAcceptableOrUnknown(
               data['skip_non_music']!, _skipNonMusicMeta));
     }
-    context.handle(_closeBehaviorMeta, const VerificationResult.success());
-    context.handle(_accentColorSchemeMeta, const VerificationResult.success());
-    context.handle(_layoutModeMeta, const VerificationResult.success());
-    context.handle(_localeMeta, const VerificationResult.success());
-    context.handle(_marketMeta, const VerificationResult.success());
-    context.handle(_searchModeMeta, const VerificationResult.success());
     if (data.containsKey('download_location')) {
       context.handle(
           _downloadLocationMeta,
           downloadLocation.isAcceptableOrUnknown(
               data['download_location']!, _downloadLocationMeta));
     }
-    context.handle(
-        _localLibraryLocationMeta, const VerificationResult.success());
     if (data.containsKey('piped_instance')) {
       context.handle(
           _pipedInstanceMeta,
@@ -956,12 +924,12 @@ class $PreferencesTableTable extends PreferencesTable
           invidiousInstance.isAcceptableOrUnknown(
               data['invidious_instance']!, _invidiousInstanceMeta));
     }
-    context.handle(_themeModeMeta, const VerificationResult.success());
-    context.handle(_audioSourceMeta, const VerificationResult.success());
-    context.handle(
-        _youtubeClientEngineMeta, const VerificationResult.success());
-    context.handle(_streamMusicCodecMeta, const VerificationResult.success());
-    context.handle(_downloadMusicCodecMeta, const VerificationResult.success());
+    if (data.containsKey('tlmc_instance')) {
+      context.handle(
+          _tlmcInstanceMeta,
+          tlmcInstance.isAcceptableOrUnknown(
+              data['tlmc_instance']!, _tlmcInstanceMeta));
+    }
     if (data.containsKey('discord_presence')) {
       context.handle(
           _discordPresenceMeta,
@@ -1048,6 +1016,8 @@ class $PreferencesTableTable extends PreferencesTable
           .read(DriftSqlType.string, data['${effectivePrefix}piped_instance'])!,
       invidiousInstance: attachedDatabase.typeMapping.read(
           DriftSqlType.string, data['${effectivePrefix}invidious_instance'])!,
+      tlmcInstance: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}tlmc_instance'])!,
       themeMode: $PreferencesTableTable.$converterthemeMode.fromSql(
           attachedDatabase.typeMapping.read(
               DriftSqlType.string, data['${effectivePrefix}theme_mode'])!),
@@ -1135,6 +1105,7 @@ class PreferencesTableData extends DataClass
   final List<String> localLibraryLocation;
   final String pipedInstance;
   final String invidiousInstance;
+  final String tlmcInstance;
   final ThemeMode themeMode;
   final AudioSource audioSource;
   final YoutubeClientEngine youtubeClientEngine;
@@ -1165,6 +1136,7 @@ class PreferencesTableData extends DataClass
       required this.localLibraryLocation,
       required this.pipedInstance,
       required this.invidiousInstance,
+      required this.tlmcInstance,
       required this.themeMode,
       required this.audioSource,
       required this.youtubeClientEngine,
@@ -1223,6 +1195,7 @@ class PreferencesTableData extends DataClass
     }
     map['piped_instance'] = Variable<String>(pipedInstance);
     map['invidious_instance'] = Variable<String>(invidiousInstance);
+    map['tlmc_instance'] = Variable<String>(tlmcInstance);
     {
       map['theme_mode'] = Variable<String>(
           $PreferencesTableTable.$converterthemeMode.toSql(themeMode));
@@ -1275,6 +1248,7 @@ class PreferencesTableData extends DataClass
       localLibraryLocation: Value(localLibraryLocation),
       pipedInstance: Value(pipedInstance),
       invidiousInstance: Value(invidiousInstance),
+      tlmcInstance: Value(tlmcInstance),
       themeMode: Value(themeMode),
       audioSource: Value(audioSource),
       youtubeClientEngine: Value(youtubeClientEngine),
@@ -1318,6 +1292,7 @@ class PreferencesTableData extends DataClass
           serializer.fromJson<List<String>>(json['localLibraryLocation']),
       pipedInstance: serializer.fromJson<String>(json['pipedInstance']),
       invidiousInstance: serializer.fromJson<String>(json['invidiousInstance']),
+      tlmcInstance: serializer.fromJson<String>(json['tlmcInstance']),
       themeMode: $PreferencesTableTable.$converterthemeMode
           .fromJson(serializer.fromJson<String>(json['themeMode'])),
       audioSource: $PreferencesTableTable.$converteraudioSource
@@ -1364,6 +1339,7 @@ class PreferencesTableData extends DataClass
           serializer.toJson<List<String>>(localLibraryLocation),
       'pipedInstance': serializer.toJson<String>(pipedInstance),
       'invidiousInstance': serializer.toJson<String>(invidiousInstance),
+      'tlmcInstance': serializer.toJson<String>(tlmcInstance),
       'themeMode': serializer.toJson<String>(
           $PreferencesTableTable.$converterthemeMode.toJson(themeMode)),
       'audioSource': serializer.toJson<String>(
@@ -1405,6 +1381,7 @@ class PreferencesTableData extends DataClass
           List<String>? localLibraryLocation,
           String? pipedInstance,
           String? invidiousInstance,
+          String? tlmcInstance,
           ThemeMode? themeMode,
           AudioSource? audioSource,
           YoutubeClientEngine? youtubeClientEngine,
@@ -1435,6 +1412,7 @@ class PreferencesTableData extends DataClass
         localLibraryLocation: localLibraryLocation ?? this.localLibraryLocation,
         pipedInstance: pipedInstance ?? this.pipedInstance,
         invidiousInstance: invidiousInstance ?? this.invidiousInstance,
+        tlmcInstance: tlmcInstance ?? this.tlmcInstance,
         themeMode: themeMode ?? this.themeMode,
         audioSource: audioSource ?? this.audioSource,
         youtubeClientEngine: youtubeClientEngine ?? this.youtubeClientEngine,
@@ -1496,6 +1474,9 @@ class PreferencesTableData extends DataClass
       invidiousInstance: data.invidiousInstance.present
           ? data.invidiousInstance.value
           : this.invidiousInstance,
+      tlmcInstance: data.tlmcInstance.present
+          ? data.tlmcInstance.value
+          : this.tlmcInstance,
       themeMode: data.themeMode.present ? data.themeMode.value : this.themeMode,
       audioSource:
           data.audioSource.present ? data.audioSource.value : this.audioSource,
@@ -1546,6 +1527,7 @@ class PreferencesTableData extends DataClass
           ..write('localLibraryLocation: $localLibraryLocation, ')
           ..write('pipedInstance: $pipedInstance, ')
           ..write('invidiousInstance: $invidiousInstance, ')
+          ..write('tlmcInstance: $tlmcInstance, ')
           ..write('themeMode: $themeMode, ')
           ..write('audioSource: $audioSource, ')
           ..write('youtubeClientEngine: $youtubeClientEngine, ')
@@ -1581,6 +1563,7 @@ class PreferencesTableData extends DataClass
         localLibraryLocation,
         pipedInstance,
         invidiousInstance,
+        tlmcInstance,
         themeMode,
         audioSource,
         youtubeClientEngine,
@@ -1615,6 +1598,7 @@ class PreferencesTableData extends DataClass
           other.localLibraryLocation == this.localLibraryLocation &&
           other.pipedInstance == this.pipedInstance &&
           other.invidiousInstance == this.invidiousInstance &&
+          other.tlmcInstance == this.tlmcInstance &&
           other.themeMode == this.themeMode &&
           other.audioSource == this.audioSource &&
           other.youtubeClientEngine == this.youtubeClientEngine &&
@@ -1647,6 +1631,7 @@ class PreferencesTableCompanion extends UpdateCompanion<PreferencesTableData> {
   final Value<List<String>> localLibraryLocation;
   final Value<String> pipedInstance;
   final Value<String> invidiousInstance;
+  final Value<String> tlmcInstance;
   final Value<ThemeMode> themeMode;
   final Value<AudioSource> audioSource;
   final Value<YoutubeClientEngine> youtubeClientEngine;
@@ -1677,6 +1662,7 @@ class PreferencesTableCompanion extends UpdateCompanion<PreferencesTableData> {
     this.localLibraryLocation = const Value.absent(),
     this.pipedInstance = const Value.absent(),
     this.invidiousInstance = const Value.absent(),
+    this.tlmcInstance = const Value.absent(),
     this.themeMode = const Value.absent(),
     this.audioSource = const Value.absent(),
     this.youtubeClientEngine = const Value.absent(),
@@ -1708,6 +1694,7 @@ class PreferencesTableCompanion extends UpdateCompanion<PreferencesTableData> {
     this.localLibraryLocation = const Value.absent(),
     this.pipedInstance = const Value.absent(),
     this.invidiousInstance = const Value.absent(),
+    this.tlmcInstance = const Value.absent(),
     this.themeMode = const Value.absent(),
     this.audioSource = const Value.absent(),
     this.youtubeClientEngine = const Value.absent(),
@@ -1739,6 +1726,7 @@ class PreferencesTableCompanion extends UpdateCompanion<PreferencesTableData> {
     Expression<String>? localLibraryLocation,
     Expression<String>? pipedInstance,
     Expression<String>? invidiousInstance,
+    Expression<String>? tlmcInstance,
     Expression<String>? themeMode,
     Expression<String>? audioSource,
     Expression<String>? youtubeClientEngine,
@@ -1772,6 +1760,7 @@ class PreferencesTableCompanion extends UpdateCompanion<PreferencesTableData> {
         'local_library_location': localLibraryLocation,
       if (pipedInstance != null) 'piped_instance': pipedInstance,
       if (invidiousInstance != null) 'invidious_instance': invidiousInstance,
+      if (tlmcInstance != null) 'tlmc_instance': tlmcInstance,
       if (themeMode != null) 'theme_mode': themeMode,
       if (audioSource != null) 'audio_source': audioSource,
       if (youtubeClientEngine != null)
@@ -1807,6 +1796,7 @@ class PreferencesTableCompanion extends UpdateCompanion<PreferencesTableData> {
       Value<List<String>>? localLibraryLocation,
       Value<String>? pipedInstance,
       Value<String>? invidiousInstance,
+      Value<String>? tlmcInstance,
       Value<ThemeMode>? themeMode,
       Value<AudioSource>? audioSource,
       Value<YoutubeClientEngine>? youtubeClientEngine,
@@ -1837,6 +1827,7 @@ class PreferencesTableCompanion extends UpdateCompanion<PreferencesTableData> {
       localLibraryLocation: localLibraryLocation ?? this.localLibraryLocation,
       pipedInstance: pipedInstance ?? this.pipedInstance,
       invidiousInstance: invidiousInstance ?? this.invidiousInstance,
+      tlmcInstance: tlmcInstance ?? this.tlmcInstance,
       themeMode: themeMode ?? this.themeMode,
       audioSource: audioSource ?? this.audioSource,
       youtubeClientEngine: youtubeClientEngine ?? this.youtubeClientEngine,
@@ -1922,6 +1913,9 @@ class PreferencesTableCompanion extends UpdateCompanion<PreferencesTableData> {
     if (invidiousInstance.present) {
       map['invidious_instance'] = Variable<String>(invidiousInstance.value);
     }
+    if (tlmcInstance.present) {
+      map['tlmc_instance'] = Variable<String>(tlmcInstance.value);
+    }
     if (themeMode.present) {
       map['theme_mode'] = Variable<String>(
           $PreferencesTableTable.$converterthemeMode.toSql(themeMode.value));
@@ -1986,6 +1980,7 @@ class PreferencesTableCompanion extends UpdateCompanion<PreferencesTableData> {
           ..write('localLibraryLocation: $localLibraryLocation, ')
           ..write('pipedInstance: $pipedInstance, ')
           ..write('invidiousInstance: $invidiousInstance, ')
+          ..write('tlmcInstance: $tlmcInstance, ')
           ..write('themeMode: $themeMode, ')
           ..write('audioSource: $audioSource, ')
           ..write('youtubeClientEngine: $youtubeClientEngine, ')
@@ -2030,8 +2025,6 @@ class $ScrobblerTableTable extends ScrobblerTable
   late final GeneratedColumn<String> username = GeneratedColumn<String>(
       'username', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _passwordHashMeta =
-      const VerificationMeta('passwordHash');
   @override
   late final GeneratedColumnWithTypeConverter<DecryptedText, String>
       passwordHash = GeneratedColumn<String>(
@@ -2064,7 +2057,6 @@ class $ScrobblerTableTable extends ScrobblerTable
     } else if (isInserting) {
       context.missing(_usernameMeta);
     }
-    context.handle(_passwordHashMeta, const VerificationResult.success());
     return context;
   }
 
@@ -2595,8 +2587,6 @@ class $SourceMatchTableTable extends SourceMatchTable
   late final GeneratedColumn<String> sourceId = GeneratedColumn<String>(
       'source_id', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _sourceTypeMeta =
-      const VerificationMeta('sourceType');
   @override
   late final GeneratedColumnWithTypeConverter<SourceType, String> sourceType =
       GeneratedColumn<String>('source_type', aliasedName, false,
@@ -2642,7 +2632,6 @@ class $SourceMatchTableTable extends SourceMatchTable
     } else if (isInserting) {
       context.missing(_sourceIdMeta);
     }
-    context.handle(_sourceTypeMeta, const VerificationResult.success());
     if (data.containsKey('created_at')) {
       context.handle(_createdAtMeta,
           createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
@@ -2901,8 +2890,6 @@ class $AudioPlayerStateTableTable extends AudioPlayerStateTable
       requiredDuringInsert: true,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('CHECK ("playing" IN (0, 1))'));
-  static const VerificationMeta _loopModeMeta =
-      const VerificationMeta('loopMode');
   @override
   late final GeneratedColumnWithTypeConverter<PlaylistMode, String> loopMode =
       GeneratedColumn<String>('loop_mode', aliasedName, false,
@@ -2918,15 +2905,12 @@ class $AudioPlayerStateTableTable extends AudioPlayerStateTable
       requiredDuringInsert: true,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('CHECK ("shuffled" IN (0, 1))'));
-  static const VerificationMeta _collectionsMeta =
-      const VerificationMeta('collections');
   @override
   late final GeneratedColumnWithTypeConverter<List<String>, String>
       collections = GeneratedColumn<String>('collections', aliasedName, false,
               type: DriftSqlType.string, requiredDuringInsert: true)
           .withConverter<List<String>>(
               $AudioPlayerStateTableTable.$convertercollections);
-  static const VerificationMeta _tracksMeta = const VerificationMeta('tracks');
   @override
   late final GeneratedColumnWithTypeConverter<List<SpotubeTrackObject>, String>
       tracks = GeneratedColumn<String>('tracks', aliasedName, false,
@@ -2966,15 +2950,12 @@ class $AudioPlayerStateTableTable extends AudioPlayerStateTable
     } else if (isInserting) {
       context.missing(_playingMeta);
     }
-    context.handle(_loopModeMeta, const VerificationResult.success());
     if (data.containsKey('shuffled')) {
       context.handle(_shuffledMeta,
           shuffled.isAcceptableOrUnknown(data['shuffled']!, _shuffledMeta));
     } else if (isInserting) {
       context.missing(_shuffledMeta);
     }
-    context.handle(_collectionsMeta, const VerificationResult.success());
-    context.handle(_tracksMeta, const VerificationResult.success());
     if (data.containsKey('current_index')) {
       context.handle(
           _currentIndexMeta,
@@ -3305,7 +3286,6 @@ class $HistoryTableTable extends HistoryTable
       type: DriftSqlType.dateTime,
       requiredDuringInsert: false,
       defaultValue: currentDateAndTime);
-  static const VerificationMeta _typeMeta = const VerificationMeta('type');
   @override
   late final GeneratedColumnWithTypeConverter<HistoryEntryType, String> type =
       GeneratedColumn<String>('type', aliasedName, false,
@@ -3316,7 +3296,6 @@ class $HistoryTableTable extends HistoryTable
   late final GeneratedColumn<String> itemId = GeneratedColumn<String>(
       'item_id', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _dataMeta = const VerificationMeta('data');
   @override
   late final GeneratedColumnWithTypeConverter<Map<String, dynamic>, String>
       data = GeneratedColumn<String>('data', aliasedName, false,
@@ -3342,14 +3321,12 @@ class $HistoryTableTable extends HistoryTable
       context.handle(_createdAtMeta,
           createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
     }
-    context.handle(_typeMeta, const VerificationResult.success());
     if (data.containsKey('item_id')) {
       context.handle(_itemIdMeta,
           itemId.isAcceptableOrUnknown(data['item_id']!, _itemIdMeta));
     } else if (isInserting) {
       context.missing(_itemIdMeta);
     }
-    context.handle(_dataMeta, const VerificationResult.success());
     return context;
   }
 
@@ -3608,7 +3585,6 @@ class $LyricsTableTable extends LyricsTable
   late final GeneratedColumn<String> trackId = GeneratedColumn<String>(
       'track_id', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _dataMeta = const VerificationMeta('data');
   @override
   late final GeneratedColumnWithTypeConverter<SubtitleSimple, String> data =
       GeneratedColumn<String>('data', aliasedName, false,
@@ -3635,7 +3611,6 @@ class $LyricsTableTable extends LyricsTable
     } else if (isInserting) {
       context.missing(_trackIdMeta);
     }
-    context.handle(_dataMeta, const VerificationResult.success());
     return context;
   }
 
@@ -3853,15 +3828,12 @@ class $MetadataPluginsTableTable extends MetadataPluginsTable
   late final GeneratedColumn<String> entryPoint = GeneratedColumn<String>(
       'entry_point', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _apisMeta = const VerificationMeta('apis');
   @override
   late final GeneratedColumnWithTypeConverter<List<String>, String> apis =
       GeneratedColumn<String>('apis', aliasedName, false,
               type: DriftSqlType.string, requiredDuringInsert: true)
           .withConverter<List<String>>(
               $MetadataPluginsTableTable.$converterapis);
-  static const VerificationMeta _abilitiesMeta =
-      const VerificationMeta('abilities');
   @override
   late final GeneratedColumnWithTypeConverter<List<String>, String> abilities =
       GeneratedColumn<String>('abilities', aliasedName, false,
@@ -3954,8 +3926,6 @@ class $MetadataPluginsTableTable extends MetadataPluginsTable
     } else if (isInserting) {
       context.missing(_entryPointMeta);
     }
-    context.handle(_apisMeta, const VerificationResult.success());
-    context.handle(_abilitiesMeta, const VerificationResult.success());
     if (data.containsKey('selected')) {
       context.handle(_selectedMeta,
           selected.isAcceptableOrUnknown(data['selected']!, _selectedMeta));
@@ -4751,6 +4721,7 @@ typedef $$PreferencesTableTableCreateCompanionBuilder
   Value<List<String>> localLibraryLocation,
   Value<String> pipedInstance,
   Value<String> invidiousInstance,
+  Value<String> tlmcInstance,
   Value<ThemeMode> themeMode,
   Value<AudioSource> audioSource,
   Value<YoutubeClientEngine> youtubeClientEngine,
@@ -4783,6 +4754,7 @@ typedef $$PreferencesTableTableUpdateCompanionBuilder
   Value<List<String>> localLibraryLocation,
   Value<String> pipedInstance,
   Value<String> invidiousInstance,
+  Value<String> tlmcInstance,
   Value<ThemeMode> themeMode,
   Value<AudioSource> audioSource,
   Value<YoutubeClientEngine> youtubeClientEngine,
@@ -4883,6 +4855,9 @@ class $$PreferencesTableTableFilterComposer
   ColumnFilters<String> get invidiousInstance => $composableBuilder(
       column: $table.invidiousInstance,
       builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get tlmcInstance => $composableBuilder(
+      column: $table.tlmcInstance, builder: (column) => ColumnFilters(column));
 
   ColumnWithTypeConverterFilters<ThemeMode, ThemeMode, String> get themeMode =>
       $composableBuilder(
@@ -5007,6 +4982,10 @@ class $$PreferencesTableTableOrderingComposer
       column: $table.invidiousInstance,
       builder: (column) => ColumnOrderings(column));
 
+  ColumnOrderings<String> get tlmcInstance => $composableBuilder(
+      column: $table.tlmcInstance,
+      builder: (column) => ColumnOrderings(column));
+
   ColumnOrderings<String> get themeMode => $composableBuilder(
       column: $table.themeMode, builder: (column) => ColumnOrderings(column));
 
@@ -5116,6 +5095,9 @@ class $$PreferencesTableTableAnnotationComposer
   GeneratedColumn<String> get invidiousInstance => $composableBuilder(
       column: $table.invidiousInstance, builder: (column) => column);
 
+  GeneratedColumn<String> get tlmcInstance => $composableBuilder(
+      column: $table.tlmcInstance, builder: (column) => column);
+
   GeneratedColumnWithTypeConverter<ThemeMode, String> get themeMode =>
       $composableBuilder(column: $table.themeMode, builder: (column) => column);
 
@@ -5198,6 +5180,7 @@ class $$PreferencesTableTableTableManager extends RootTableManager<
             Value<List<String>> localLibraryLocation = const Value.absent(),
             Value<String> pipedInstance = const Value.absent(),
             Value<String> invidiousInstance = const Value.absent(),
+            Value<String> tlmcInstance = const Value.absent(),
             Value<ThemeMode> themeMode = const Value.absent(),
             Value<AudioSource> audioSource = const Value.absent(),
             Value<YoutubeClientEngine> youtubeClientEngine =
@@ -5230,6 +5213,7 @@ class $$PreferencesTableTableTableManager extends RootTableManager<
             localLibraryLocation: localLibraryLocation,
             pipedInstance: pipedInstance,
             invidiousInstance: invidiousInstance,
+            tlmcInstance: tlmcInstance,
             themeMode: themeMode,
             audioSource: audioSource,
             youtubeClientEngine: youtubeClientEngine,
@@ -5261,6 +5245,7 @@ class $$PreferencesTableTableTableManager extends RootTableManager<
             Value<List<String>> localLibraryLocation = const Value.absent(),
             Value<String> pipedInstance = const Value.absent(),
             Value<String> invidiousInstance = const Value.absent(),
+            Value<String> tlmcInstance = const Value.absent(),
             Value<ThemeMode> themeMode = const Value.absent(),
             Value<AudioSource> audioSource = const Value.absent(),
             Value<YoutubeClientEngine> youtubeClientEngine =
@@ -5293,6 +5278,7 @@ class $$PreferencesTableTableTableManager extends RootTableManager<
             localLibraryLocation: localLibraryLocation,
             pipedInstance: pipedInstance,
             invidiousInstance: invidiousInstance,
+            tlmcInstance: tlmcInstance,
             themeMode: themeMode,
             audioSource: audioSource,
             youtubeClientEngine: youtubeClientEngine,

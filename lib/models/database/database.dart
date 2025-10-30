@@ -65,7 +65,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 8;
+  int get schemaVersion => 9;
 
   @override
   MigrationStrategy get migration {
@@ -198,6 +198,12 @@ class AppDatabase extends _$AppDatabase {
               throw error;
             }
           });
+        },
+        from8To9: (m, schema) async {
+          await m.addColumn(
+            schema.preferencesTable,
+            schema.preferencesTable.tlmcInstance,
+          );
         },
       ),
     );

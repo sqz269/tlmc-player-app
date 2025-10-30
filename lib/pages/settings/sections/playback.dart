@@ -283,6 +283,40 @@ class SettingsPlaybackSection extends HookConsumerWidget {
             },
           ),
         ),
+        AnimatedCrossFade(
+          duration: const Duration(milliseconds: 300),
+          crossFadeState: preferences.audioSource != AudioSource.tlmc
+              ? CrossFadeState.showFirst
+              : CrossFadeState.showSecond,
+          firstChild: const SizedBox.shrink(),
+          secondChild: ListTile(
+            leading: const Icon(SpotubeIcons.api),
+            title: const Text("TLMC Instance"),
+            subtitle: Text(preferences.tlmcInstance),
+            trailing: Tooltip(
+              tooltip: TooltipContainer(
+                child: Text(context.l10n.add_custom_url),
+              ).call,
+              child: IconButton.outline(
+                icon: const Icon(SpotubeIcons.edit),
+                size: ButtonSize.small,
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    barrierColor: Colors.black.withValues(alpha: 0.5),
+                    builder: (context) => SettingsPlaybackEditInstanceUrlDialog(
+                      title: "TLMC Instance",
+                      initialValue: preferences.tlmcInstance,
+                      onSave: (value) {
+                        preferencesNotifier.setTlmcInstance(value);
+                      },
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ),
         switch (preferences.audioSource) {
           AudioSource.youtube => AdaptiveSelectTile<YoutubeClientEngine>(
               secondary: const Icon(SpotubeIcons.engine),
