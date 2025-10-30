@@ -1,8 +1,13 @@
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:spotube/models/metadata/metadata.dart';
 import 'package:spotube/services/metadata/interfaces/search_endpoint.dart';
 
 /// TLMC implementation of MetadataSearchEndpointInterface
 class TlmcSearchEndpoint implements MetadataSearchEndpointInterface {
+  final Ref ref;
+
+  TlmcSearchEndpoint(this.ref);
+
   @override
   List<String> get chips => ['all', 'tracks', 'albums', 'artists', 'playlists'];
 

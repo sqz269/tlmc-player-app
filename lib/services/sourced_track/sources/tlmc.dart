@@ -28,6 +28,10 @@ class TlmcSourcedTrack extends SourcedTrack {
     required super.sources,
   });
 
+  static String getHlsUrl(String trackId, String tlmcInstance) {
+    return "$tlmcInstance/api/asset/track/$trackId/hls";
+  }
+
   static Future<SourcedTrack> fetchFromTrack({
     required TrackSourceQuery query,
     required Ref ref,
@@ -42,16 +46,10 @@ class TlmcSourcedTrack extends SourcedTrack {
       throw TrackNotFoundError(query);
     }
 
-    AppLogger.log.i("Fetched track - ID: ${response.id}");
-    AppLogger.log.i("Title: ${response.name!.default_}");
-
     // Adaptive streaming URLs - supports both HLS and DASH formats
-    final hlsUrl = "$tlmcInstance/api/asset/track/${response.id}/hls";
-    final dashUrl =
-        "$tlmcInstance/api/asset/track/${response.id}/dash/manifest.mpd";
+    final hlsUrl = getHlsUrl(query.id, tlmcInstance);
 
     AppLogger.log.i("HLS URL (master): $hlsUrl");
-    AppLogger.log.i("DASH URL (manifest): $dashUrl");
 
     final sourcedTrack = TlmcSourcedTrack(
       ref: ref,
@@ -77,20 +75,6 @@ class TlmcSourcedTrack extends SourcedTrack {
           codec: SourceCodecs.m4a,
           bitrate: "adaptive",
         ),
-
-        // Try media playlist
-        // TrackSource(
-        //   url: "$hlsUrl/320k/playlist.m3u8?generated=true",
-        //   quality: SourceQualities.high,
-        //   codec: SourceCodecs.m4a,
-        //   bitrate: "320k",
-        // ),
-        // TrackSource(
-        //   url: "$hlsUrl/192k/playlist.m3u8?generated=true",
-        //   quality: SourceQualities.high,
-        //   codec: SourceCodecs.m4a,
-        //   bitrate: "192k",
-        // ),
       ],
     );
 
@@ -112,7 +96,7 @@ class TlmcSourcedTrack extends SourcedTrack {
 
   @override
   Future<SourcedTrack> refreshStream() async {
-    throw UnimplementedError();
+    return this;
   }
 
   @override

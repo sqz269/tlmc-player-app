@@ -437,14 +437,13 @@ final metadataPluginProvider = FutureProvider<MetadataPlugin?>(
     );
 
     if (defaultPlugin == null) {
-      return DartTlmcDefaultMetadataPlugin.create();
-      return null;
+      return DartTlmcDefaultMetadataPlugin.create(ref);
     }
 
     final pluginsNotifier = ref.read(metadataPluginsProvider.notifier);
 
     if (defaultPlugin.entryPoint == "::dart::") {
-      return DartTlmcDefaultMetadataPlugin.create();
+      return DartTlmcDefaultMetadataPlugin.create(ref);
     } else {
       final pluginByteCode =
           await pluginsNotifier.getPluginByteCode(defaultPlugin);

@@ -1,12 +1,16 @@
 import 'dart:async';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:spotube/services/metadata/interfaces/auth_endpoint.dart';
 
 /// TLMC implementation of MetadataAuthEndpointInterface
 /// This is a placeholder implementation that can be extended
 class TlmcAuthEndpoint implements MetadataAuthEndpointInterface {
+  final Ref ref;
   final StreamController<bool> _authStateController =
       StreamController<bool>.broadcast();
   bool _isAuthenticated = false;
+
+  TlmcAuthEndpoint(this.ref);
 
   @override
   Stream get authStateStream => _authStateController.stream;

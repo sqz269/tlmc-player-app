@@ -1,8 +1,13 @@
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:spotube/models/metadata/metadata.dart';
 import 'package:spotube/services/metadata/interfaces/user_endpoint.dart';
 
 /// TLMC implementation of MetadataUserEndpointInterface
 class TlmcUserEndpoint implements MetadataUserEndpointInterface {
+  final Ref ref;
+
+  TlmcUserEndpoint(this.ref);
+
   @override
   Future<SpotubeUserObject> me() async {
     throw UnimplementedError('TLMC user me endpoint not implemented yet');

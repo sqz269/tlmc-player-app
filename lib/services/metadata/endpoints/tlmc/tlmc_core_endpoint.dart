@@ -1,8 +1,13 @@
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:spotube/models/metadata/metadata.dart';
 import 'package:spotube/services/metadata/interfaces/core_endpoint.dart';
 
 /// TLMC implementation of MetadataCoreEndpointInterface
 class TlmcCoreEndpoint implements MetadataCoreEndpointInterface {
+  final Ref ref;
+
+  TlmcCoreEndpoint(this.ref);
+
   @override
   Future<PluginUpdateAvailable?> checkUpdate(
       PluginConfiguration pluginConfig) async {

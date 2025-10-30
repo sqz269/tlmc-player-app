@@ -1,20 +1,26 @@
 import 'package:backend_client_api/api.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:spotube/models/metadata/metadata.dart';
+import 'package:spotube/provider/user_preferences/user_preferences_provider.dart';
 import 'package:spotube/services/metadata/endpoints/tlmc/mapping_utils.dart';
 import 'package:spotube/services/metadata/interfaces/browse_endpoint.dart';
 
 /// TLMC implementation of MetadataBrowseEndpointInterface
 class TlmcBrowseEndpoint implements MetadataBrowseEndpointInterface {
+  final Ref ref;
+
+  TlmcBrowseEndpoint(this.ref);
   @override
   Future<SpotubePaginationResponseObject<SpotubeBrowseSectionObject<Object>>>
       sections({
     int? offset,
     int? limit,
   }) async {
+    final tlmcInstance = ref.read(userPreferencesProvider).tlmcInstance;
     var offsetInt = offset ?? 0;
     var limitInt = limit ?? 20;
 
-    var client = ApiClient(basePath: 'https://staging-api.marisad.me');
+    var client = ApiClient(basePath: tlmcInstance);
     var albumApi = AlbumApi(client);
     var response = await albumApi.getAlbums(
       start: offsetInt,

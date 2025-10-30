@@ -1,8 +1,13 @@
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:spotube/models/metadata/metadata.dart';
 import 'package:spotube/services/metadata/interfaces/artist_endpoint.dart';
 
 /// TLMC implementation of MetadataArtistEndpointInterface
 class TlmcArtistEndpoint implements MetadataArtistEndpointInterface {
+  final Ref ref;
+
+  TlmcArtistEndpoint(this.ref);
+
   @override
   Future<SpotubeFullArtistObject> getArtist(String id) async {
     throw UnimplementedError('TLMC artist endpoint not implemented yet');

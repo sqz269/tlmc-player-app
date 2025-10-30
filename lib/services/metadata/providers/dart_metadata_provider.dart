@@ -1,3 +1,4 @@
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:spotube/models/metadata/metadata.dart';
 import 'package:spotube/services/metadata/interfaces/index.dart';
 import 'package:spotube/services/metadata/endpoints/tlmc/tlmc_auth_endpoint.dart';
@@ -14,6 +15,7 @@ import 'package:spotube/services/metadata/endpoints/tlmc/tlmc_user_endpoint.dart
 /// This allows pure Dart code to become metadata providers
 class DartMetadataProvider implements MetadataProvider {
   final PluginConfiguration _config;
+  final Ref _ref;
 
   late final MetadataAuthEndpointInterface _auth;
   late final MetadataAlbumEndpointInterface _album;
@@ -27,16 +29,16 @@ class DartMetadataProvider implements MetadataProvider {
 
   bool _isInitialized = false;
 
-  DartMetadataProvider._(this._config) {
-    _auth = TlmcAuthEndpoint();
-    _album = TlmcAlbumEndpoint();
-    _artist = TlmcArtistEndpoint();
-    _browse = TlmcBrowseEndpoint();
-    _search = TlmcSearchEndpoint();
-    _playlist = TlmcPlaylistEndpoint();
-    _track = TlmcTrackEndpoint();
-    _user = TlmcUserEndpoint();
-    _core = TlmcCoreEndpoint();
+  DartMetadataProvider._(this._config, this._ref) {
+    _auth = TlmcAuthEndpoint(_ref);
+    _album = TlmcAlbumEndpoint(_ref);
+    _artist = TlmcArtistEndpoint(_ref);
+    _browse = TlmcBrowseEndpoint(_ref);
+    _search = TlmcSearchEndpoint(_ref);
+    _playlist = TlmcPlaylistEndpoint(_ref);
+    _track = TlmcTrackEndpoint(_ref);
+    _user = TlmcUserEndpoint(_ref);
+    _core = TlmcCoreEndpoint(_ref);
   }
 
   @override
@@ -92,7 +94,7 @@ class DartMetadataProvider implements MetadataProvider {
   MetadataCoreEndpointInterface get core => _core;
 
   /// Factory method to create a DartMetadataProvider
-  static DartMetadataProvider create(PluginConfiguration config) {
-    return DartMetadataProvider._(config);
+  static DartMetadataProvider create(PluginConfiguration config, Ref ref) {
+    return DartMetadataProvider._(config, ref);
   }
 }

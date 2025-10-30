@@ -1,8 +1,13 @@
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:spotube/models/metadata/metadata.dart';
 import 'package:spotube/services/metadata/interfaces/playlist_endpoint.dart';
 
 /// TLMC implementation of MetadataPlaylistEndpointInterface
 class TlmcPlaylistEndpoint implements MetadataPlaylistEndpointInterface {
+  final Ref ref;
+
+  TlmcPlaylistEndpoint(this.ref);
+
   @override
   Future<SpotubeFullPlaylistObject> getPlaylist(String id) async {
     throw UnimplementedError('TLMC playlist endpoint not implemented yet');

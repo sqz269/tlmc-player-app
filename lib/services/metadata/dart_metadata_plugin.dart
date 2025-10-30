@@ -1,8 +1,9 @@
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:spotube/models/metadata/metadata.dart';
 import 'package:spotube/services/metadata/metadata.dart';
 
 class DartTlmcDefaultMetadataPlugin {
-  static MetadataPlugin create() {
+  static MetadataPlugin create(Ref ref) {
     return MetadataPlugin.createDart(
       PluginConfiguration(
         type: PluginType.metadata,
@@ -13,6 +14,7 @@ class DartTlmcDefaultMetadataPlugin {
         entryPoint: '::dart::',
         pluginApiVersion: '1.0.0',
       ),
+      ref,
     );
   }
 }

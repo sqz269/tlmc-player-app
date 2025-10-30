@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:spotube/models/metadata/metadata.dart';
 import 'package:spotube/services/metadata/interfaces/index.dart';
@@ -27,8 +28,8 @@ class MetadataPlugin {
   }
 
   /// Create a Dart-based metadata plugin
-  static MetadataPlugin createDart(PluginConfiguration config) {
-    final provider = DartMetadataProvider.create(config);
+  static MetadataPlugin createDart(PluginConfiguration config, Ref ref) {
+    final provider = DartMetadataProvider.create(config, ref);
     return MetadataPlugin._(provider);
   }
 

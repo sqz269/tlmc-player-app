@@ -1,13 +1,20 @@
 import 'package:backend_client_api/api.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:spotube/models/metadata/metadata.dart';
+import 'package:spotube/provider/user_preferences/user_preferences_provider.dart';
 import 'package:spotube/services/metadata/endpoints/tlmc/mapping_utils.dart';
 import 'package:spotube/services/metadata/interfaces/track_endpoint.dart';
 
 /// TLMC implementation of MetadataTrackEndpointInterface
 class TlmcTrackEndpoint implements MetadataTrackEndpointInterface {
+  final Ref ref;
+
+  TlmcTrackEndpoint(this.ref);
+
   @override
   Future<SpotubeFullTrackObject> getTrack(String id) async {
-    var client = ApiClient(basePath: 'https://staging-api.marisad.me');
+    final tlmcInstance = ref.read(userPreferencesProvider).tlmcInstance;
+    var client = ApiClient(basePath: tlmcInstance);
     var trackApi = TrackApi(client);
     var response = await trackApi.getTrack(id);
 
