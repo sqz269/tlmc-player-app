@@ -54,8 +54,8 @@ class PlaybuttonCard extends StatelessWidget {
                   image: DecorationImage(
                     image: UniversalImage.imageProvider(
                       imageUrl!,
-                      height: 200 * scale,
-                      width: 200 * scale,
+                      height: 400 * scale,
+                      width: 400 * scale,
                     ),
                     fit: BoxFit.cover,
                   ),
