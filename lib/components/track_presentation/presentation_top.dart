@@ -1,8 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:shadcn_flutter/shadcn_flutter_extension.dart';
+import 'package:spotube/collections/routes.gr.dart';
 import 'package:spotube/collections/spotube_icons.dart';
 import 'package:spotube/components/heart_button/heart_button.dart';
 import 'package:spotube/components/image/universal_image.dart';
@@ -218,6 +220,10 @@ class TrackPresentationTopSection extends HookConsumerWidget {
                                   children: [
                                     if (options.owner != null)
                                       OutlineBadge(
+                                        onPressed: () {
+                                          context.navigateTo(ArtistRoute(
+                                              artistId: options.owner!));
+                                        },
                                         leading: options.ownerImage != null
                                             ? Avatar(
                                                 initials:
