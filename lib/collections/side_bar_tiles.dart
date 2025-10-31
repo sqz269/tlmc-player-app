@@ -36,6 +36,13 @@ List<SideBarTiles> getSidebarTileList(AppLocalizations l10n) => [
         title: l10n.search,
       ),
       SideBarTiles(
+        id: "radio",
+        pathPrefix: "/radio",
+        route: const RadioRoute(),
+        icon: SpotubeIcons.radio,
+        title: "Radio",
+      ),
+      SideBarTiles(
         id: "lyrics",
         pathPrefix: "/lyrics",
         route: const LyricsRoute(),

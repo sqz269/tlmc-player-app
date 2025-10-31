@@ -162,6 +162,10 @@ class AppRouter extends RootStackRouter {
               page: StatsRoute.page,
             ),
             AutoRoute(
+              path: "radio",
+              page: RadioRoute.page,
+            ),
+            AutoRoute(
               path: "stats/minutes",
               page: StatsMinutesRoute.page,
             ),

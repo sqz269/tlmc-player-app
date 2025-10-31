@@ -48,7 +48,7 @@ class NavigationAction extends Action<NavigationIntent> {
 enum HomeTabs {
   browse,
   search,
-
+  radio,
   lyrics,
   userPlaylists,
   userArtists,
@@ -73,6 +73,9 @@ class HomeTabAction extends Action<HomeTabIntent> {
         break;
       case HomeTabs.search:
         router.navigate(const SearchRoute());
+        break;
+      case HomeTabs.radio:
+        router.navigate(const RadioRoute());
         break;
       case HomeTabs.lyrics:
         router.navigate(const LyricsRoute());
